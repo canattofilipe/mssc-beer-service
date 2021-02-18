@@ -22,7 +22,7 @@ import java.util.UUID;
 public class BeerDto {
 
     @Null
-    private UUID uuid;
+    private UUID id;
 
     @Null
     private Integer version;
