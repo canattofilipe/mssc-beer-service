@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v1/")
 @RestController
 public class BeerController {
 
@@ -23,7 +23,9 @@ public class BeerController {
 
   private final BeerService beerService;
 
-  @GetMapping(produces = {"application/json"})
+  @GetMapping(
+      produces = {"application/json"},
+      path = "beer")
   public ResponseEntity<BeerPagedList> listBeers(
       @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
       @RequestParam(value = "pageSize", required = false) Integer pageSize,
@@ -50,7 +52,7 @@ public class BeerController {
     return new ResponseEntity<>(beerList, HttpStatus.OK);
   }
 
-  @GetMapping("/{beerId}")
+  @GetMapping("beer/{beerId}")
   public ResponseEntity<BeerDto> getBeerById(
       @PathVariable("beerId") UUID beerId,
       @RequestParam(value = "showInventoryOnHand", required = false) Boolean showInventoryOnHand) {
@@ -62,25 +64,19 @@ public class BeerController {
     return new ResponseEntity<>(beerService.getById(beerId, showInventoryOnHand), HttpStatus.OK);
   }
 
-  @GetMapping("/beerUpc/{upc}")
-  public ResponseEntity<BeerDto> getBeerByUpc(
-      @PathVariable("upc") String upc,
-      @RequestParam(value = "showInventoryOnHand", required = false) Boolean showInventoryOnHand) {
+  @GetMapping("beerUpc/{upc}")
+  public ResponseEntity<BeerDto> getBeerByUpc(@PathVariable("upc") String upc) {
 
-    if (showInventoryOnHand == null) {
-      showInventoryOnHand = false;
-    }
-
-    return new ResponseEntity<>(beerService.getByUpc(upc, showInventoryOnHand), HttpStatus.OK);
+    return new ResponseEntity<>(beerService.getByUpc(upc), HttpStatus.OK);
   }
 
-  @PostMapping
+  @PostMapping(path = "beer")
   public ResponseEntity saveNewBeer(@Validated @RequestBody BeerDto beerDto) {
 
     return new ResponseEntity<>(beerService.saveNewBeer(beerDto), HttpStatus.CREATED);
   }
 
-  @PutMapping("/{beerId}")
+  @PutMapping("beer/{beerId}")
   public ResponseEntity updateBeerById(
       @PathVariable("beerId") UUID beerId, @RequestBody @Validated BeerDto beerDto) {
 
