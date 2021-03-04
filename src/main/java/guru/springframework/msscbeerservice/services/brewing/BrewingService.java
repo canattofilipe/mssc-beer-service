@@ -32,8 +32,8 @@ public class BrewingService {
         beer -> {
           Integer invQOH = beerInventoryService.getOnhandInventory(beer.getId());
 
-          log.debug("Min Onhand is: " + beer.getMinOnHand());
-          log.debug("Inventory Onhand is: " + invQOH);
+          log.info("Min Onhand is: " + beer.getMinOnHand());
+          log.info("Inventory Onhand is: " + invQOH);
 
           if (beer.getMinOnHand() >= invQOH) {
             jmsTemplate.convertAndSend(
