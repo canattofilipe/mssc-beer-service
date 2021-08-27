@@ -22,6 +22,7 @@ services:
       - eureka
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
   inventory-service:
     image: filipecanatto/mssc-beer-inventory-service
     ports:
@@ -37,6 +38,7 @@ services:
       SPRING_ARTEMIS_HOST: jms
       SPRING_DATASOURCE_URL: jdbc:mysql://192.168.15.31:3306/beerinventoryservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://MyUserName:MySecretPassword@config:8888"}}}}'
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
   inventory-failover:
     image: sfgbeerworks/sfg-brewery-inventory-failover
     depends_on:
@@ -44,6 +46,7 @@ services:
       - config
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADRESS: 'true'
   beer-service:
     image: filipecanatto/mssc-beer-service
     ports:
@@ -60,6 +63,7 @@ services:
       SPRING_ARTEMIS_HOST: jms
       SPRING_DATASOURCE_URL: jdbc:mysql://192.168.15.31:3306/beerservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://MyUserName:MySecretPassword@config:8888"}}}}'
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
   order-service:
     image: filipecanatto/mssc-beer-order-service
     ports:
@@ -77,6 +81,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://192.168.15.31:3306/beerorderservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://MyUserName:MySecretPassword@config:8888"}}}}'
       SFG_BREWERY_BEER_SERVICE_HOST: http://beer-service:8080
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
   gateway:
     image: filipecanatto/mssc-brewery-gateway
     ports:
@@ -91,6 +96,7 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka/
       SPRING_PROFILES_ACTIVE: local-discovery
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
 
 
 
